@@ -188,6 +188,16 @@
     </plugins>
   </build>
 
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.8.2</version>
+      <scope>test</scope>
+      <optional>true</optional>
+    </dependency>
+  </dependencies>
+
   <profiles>
     <profile>
       <id>dist-skorg</id>
@@ -218,7 +228,7 @@
   <distributionManagement>
     <site>
       <id>${project.name}.scriptkitty.org</id>
-      <url>scp://${skorg.site.url}/${project.name}</url>
+      <url>scp://${skorg.site.url}</url>
     </site>
   </distributionManagement> 
 
