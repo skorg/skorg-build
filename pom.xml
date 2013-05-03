@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-  xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -14,13 +11,28 @@
 
   <groupId>org.scriptkitty</groupId>
   <artifactId>skorg-build</artifactId>
-  <version>1</version>
+  <version>1-SNAPSHOT</version>
   <packaging>pom</packaging>
+
+  <name>skorg-build</name>
+  <url>http://scriptkitty.org</url>
+  <description>parent pom for scriptkitty.org builds</description>
 
   <organization>
     <name>scriptkitty.org</name>
     <url>http://scriptkitty.org</url>
   </organization>
+
+  <scm>
+    <url>https://github.com/skorg/skorg-build</url>
+    <connection>scm:git://github.com/skorg/skorg-build.git</connection>
+    <developerConnection>scm:git@github.com:skorg/skorg-build.git</developerConnection>
+  </scm>
+
+  <issueManagement>
+    <system>github</system>
+    <url>https://github.com/skorg/skorg-build/issues</url>
+  </issueManagement>
 
   <developers>
     <developer>
@@ -48,13 +60,15 @@
     <skorg.sb.name>${project.groupId}.${project.artifactId}</skorg.sb.name>
   </properties>
 
-
   <build>
-    <!-- all 'skorg' projects use the same directory structure - i find the maven 
-      'default' archtype layout to be annoying and over-complicated, but i digress - and 
-      are built in the exact same manner (except for some project specific properties, 
-      hence the reason for this parent pom. child projects still have the ability to override 
-      specific values... -->
+    <!-- 
+      all 'skorg' projects use the same directory structure (i find the maven 
+      'default' archtype layout to be annoying and over-complicated, but i digress...) 
+      and are built in the exact same manner (except for some project specific properties, 
+      hence the reason for this parent pom). 
+
+      child projects still have the ability to override specific values.
+     -->
     <sourceDirectory>${basedir}/src</sourceDirectory>
     <testSourceDirectory>${basedir}/test</testSourceDirectory>
     <resources>
