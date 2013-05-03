@@ -63,9 +63,9 @@
   <build>
     <!-- 
       all 'skorg' projects use the same directory structure (i find the maven 
-      'default' archtype layout to be annoying and over-complicated, but i digress...) 
-      and are built in the exact same manner (except for some project specific properties, 
-      hence the reason for this parent pom). 
+      'default' archtype layout to be annoying and over-complicated, but i 
+      digress...) and are built in the exact same manner (except for some 
+      project specific properties, hence the reason for this parent pom). 
 
       child projects still have the ability to override specific values.
      -->
@@ -242,7 +242,7 @@
   <distributionManagement>
     <site>
       <id>${project.name}.scriptkitty.org</id>
-      <url>scp://${skorg.site.url}</url>
+      <url>scp://${skorg.site.url}/${project.name}</url>
     </site>
   </distributionManagement> 
 
