@@ -26,7 +26,7 @@
   <scm>
     <url>https://github.com/skorg/skorg-build</url>
     <connection>scm:git://github.com/skorg/skorg-build.git</connection>
-    <developerConnection>scm:git@github.com:skorg/skorg-build.git</developerConnection>
+    <developerConnection>scm:git:ssh://git@github.com/skorg/skorg-build.git</developerConnection>
   </scm>
 
   <issueManagement>
@@ -214,7 +214,7 @@
 
   <profiles>
     <profile>
-      <id>dist-skorg</id>
+      <id>skorg-dist</id>
       <build>
         <plugins>
           <plugin>
