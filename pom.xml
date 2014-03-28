@@ -14,7 +14,7 @@
 
   <groupId>org.scriptkitty</groupId>
   <artifactId>skorg-build</artifactId>
-  <version>2-SNAPSHOT</version>
+  <version>3-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>skorg-build</name>
@@ -64,23 +64,6 @@
   </properties>
 
   <build>
-    <!-- 
-      all 'skorg' projects use the same directory structure (i find the maven 
-      'default' archtype layout to be annoying and over-complicated, but i 
-      digress...) and are built in the exact same manner (except for some 
-      project specific properties, hence the reason for this parent pom). 
-
-      child projects still have the ability to override specific values.
-     -->
-    <sourceDirectory>${basedir}/src</sourceDirectory>
-    <testSourceDirectory>${basedir}/test</testSourceDirectory>
-    <resources>
-      <resource>
-        <targetPath>resources</targetPath>
-        <directory>${basedir}/src/resources</directory>
-      </resource>
-    </resources>
-
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
