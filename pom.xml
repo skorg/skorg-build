@@ -234,7 +234,7 @@
   <distributionManagement>
     <site>
       <id>${project.name}.scriptkitty.org</id>
-      <url>scp://${skorg.site.url}/${project.name}</url>
+      <url>scp://${skorg.site.url}</url>
     </site>
     <snapshotRepository>
       <id>ossrh</id>
