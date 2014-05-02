@@ -79,12 +79,6 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.eclipse.tycho.extras</groupId>
-        <artifactId>tycho-document-bundle-plugin</artifactId>
-        <version>0.20.0</version>
-
-      </plugin>
-      <plugin>
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>tycho-packaging-plugin</artifactId>
         <version>${tycho-version}</version>
