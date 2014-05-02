@@ -8,7 +8,7 @@
 
   <groupId>org.scriptkitty</groupId>
   <artifactId>skorg-build</artifactId>
-  <version>4-SNAPSHOT</version>
+  <version>5-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>skorg-build</name>
@@ -48,65 +48,119 @@
   </licenses>
 
   <properties>
+    <tycho-version>0.20.0</tycho-version>
     <gpg.passphrase>${skorg.gpg.passphrase}</gpg.passphrase>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
     <maven.compiler.showWarnings>true</maven.compiler.showWarnings>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <!-- seperator -->
-    <skorg.sb.name>${project.groupId}.${project.artifactId}</skorg.sb.name>
   </properties>
 
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>2.4</version>
-        <configuration>
-          <archive>
-            <manifestFile>${basedir}/META-INF/MANIFEST.MF</manifestFile>
-            <manifestEntries>
-              <Built-By>${skorg.packaged.by}</Built-By>
-            </manifestEntries>
-          </archive>
-        </configuration>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-maven-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <extensions>true</extensions>
       </plugin>
-
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.9.1</version>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-source-plugin</artifactId>
+        <version>${tycho-version}</version>
         <configuration>
-          <archive>
-            <manifestEntries>
-              <Built-By>${skorg.packaged.by}</Built-By>
-            </manifestEntries>
-          </archive>
+          <includePom>true</includePom>
         </configuration>
         <executions>
           <execution>
-            <id>attach-javadocs</id>
+            <id>plugin-source</id>
+            <goals>
+              <goal>plugin-source</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho.extras</groupId>
+        <artifactId>tycho-document-bundle-plugin</artifactId>
+        <version>0.20.0</version>
+
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-packaging-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <configuration>
+          <strictBinIncludes>false</strictBinIncludes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>target-platform-configuration</artifactId>
+        <version>${tycho-version}</version>
+        <configuration>
+          <dependency-resolution>
+            <optionalDependencies>ignore</optionalDependencies>
+          </dependency-resolution>
+          <environments>
+            <environment>
+              <os>linux</os>
+              <ws>gtk</ws>
+              <arch>x86</arch>
+            </environment>
+            <environment>
+              <os>linux</os>
+              <ws>gtk</ws>
+              <arch>x86_64</arch>
+            </environment>
+            <environment>
+              <os>win32</os>
+              <ws>win32</ws>
+              <arch>x86</arch>
+            </environment>
+            <environment>
+              <os>win32</os>
+              <ws>win32</ws>
+              <arch>x86_64</arch>
+            </environment>
+            <environment>
+              <os>macosx</os>
+              <ws>cocoa</ws>
+              <arch>x86_64</arch>
+            </environment>
+          </environments>
+          <pomDependencies>consider</pomDependencies>
+        </configuration>
+      </plugin>
+
+      <!-- handle the things tycho doesn't (tests require separate 'fragment') -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.7</version>
+        <executions>
+          <execution>
+            <id>generate-sources</id>
+            <phase>package</phase>
             <goals>
               <goal>jar</goal>
             </goals>
           </execution>
         </executions>
       </plugin>
-
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>build-helper-maven-plugin</artifactId>
-        <version>1.8</version>
-        <configuration>
-          <propertyPrefix>bundle</propertyPrefix>
-        </configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.12.4</version>
         <executions>
           <execution>
-            <id>set-osgi-version</id>
-            <phase>verify</phase>
+            <id>test</id>
+            <phase>test</phase>
+            <configuration>
+              <includes>
+                <include>**/Test*.java</include>
+              </includes>
+            </configuration>
             <goals>
-              <goal>parse-version</goal>
+              <goal>test</goal>
             </goals>
           </execution>
         </executions>
@@ -114,32 +168,20 @@
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-source-plugin</artifactId>
-        <version>2.2.1</version>
-        <configuration>
-          <archive>
-            <manifestEntries>
-              <Bundle-ManifestVersion>2</Bundle-ManifestVersion>
-              <Bundle-Name>${project.name}</Bundle-Name>
-              <Bundle-SymbolicName>${skorg.sb.name}.source</Bundle-SymbolicName>
-              <Bundle-Vendor>${project.organization.name}</Bundle-Vendor>
-              <Bundle-Version>${bundle.osgiVersion}</Bundle-Version>
-              <Eclipse-SourceBundle>${skorg.sb.name};version="${bundle.osgiVersion}";roots:="."</Eclipse-SourceBundle>
-              <Built-By>${skorg.packaged.by}</Built-By>
-            </manifestEntries>
-          </archive>
-        </configuration>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.5.1</version>
         <executions>
           <execution>
-            <id>attach-sources</id>
-            <phase>verify</phase>
+            <id>compiletests</id>
+            <phase>test-compile</phase>
             <goals>
-              <goal>jar-no-fork</goal>
+              <goal>testCompile</goal>
             </goals>
           </execution>
         </executions>
       </plugin>
 
+      <!-- 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
@@ -178,7 +220,7 @@
           </dependency>
         </dependencies>
       </plugin>
-
+      -->
     </plugins>
   </build>
 
@@ -192,23 +234,17 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
       <version>1.7.7</version>
-      <optional>true</optional>
-      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>
-      <scope>test</scope>
-      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
+      <artifactId>mockito-core</artifactId>
       <version>1.9.5</version>
-      <scope>test</scope>
-      <optional>true</optional>      
-    </dependency>    
+    </dependency>
   </dependencies>
 
   <profiles>
