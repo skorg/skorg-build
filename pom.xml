@@ -55,6 +55,8 @@
   </properties>
 
   <build>
+    <!-- copy 'src' output directory so they run correctly in eclipse, tycho filters them by way of build.properties -->
+    <testOutputDirectory>${project.build.outputDirectory}</testOutputDirectory>
     <plugins>
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
@@ -227,17 +229,21 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
-      <version>1.7.7</version>
+      <version>1.7.7</version>      
     </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>
+      <scope>test</scope>
+      <optional>true</optional>      
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-all</artifactId>
       <version>1.9.5</version>
+      <scope>test</scope>
+      <optional>true</optional>      
     </dependency>
   </dependencies>
 
